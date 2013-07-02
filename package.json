@@ -1,0 +1,21 @@
+{
+  "name": "pull-paramap",
+  "description": "",
+  "version": "0.0.0",
+  "homepage": "https://github.com/dominictarr/pull-paramap",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/dominictarr/pull-paramap.git"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "pull-stream": "2.20",
+    "tape": "1"
+  },
+  "scripts": {
+    "test": "set -e; for t in test/*.js; do node $t; done"
+  },
+  "author": "Dominic Tarr <dominic.tarr@gmail.com> (http://dominictarr.com)",
+  "license": "MIT"  
+}
