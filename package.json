@@ -1,6 +1,6 @@
 {
   "name": "pull-paramap",
-  "description": "",
+  "description": "parallel async map pull-stream",
   "version": "1.0.1",
   "homepage": "https://github.com/dominictarr/pull-paramap",
   "repository": {
@@ -8,9 +8,9 @@
     "url": "git://github.com/dominictarr/pull-paramap.git"
   },
   "dependencies": {
+    "pull-stream": "2.20"
   },
   "devDependencies": {
-    "pull-stream": "2.20",
     "tape": "1"
   },
   "scripts": {
