@@ -3,11 +3,15 @@ var pull = require('pull-stream')
 module.exports = function (map) {
   return function (read) {
     var i = 0, j = 0, last = 0
-    var seen = [], started = false, ended = false, _cb
+    var seen = [], started = false, ended = false, _cb, error
 
     function drain () {
       if(_cb) {
         var cb = _cb
+        if(error) {
+          _cb = null
+          return cb(error)
+        }
         if(typeof seen[j] !== 'undefined') {
           _cb = null
           cb(null, seen[j++])
@@ -32,7 +36,7 @@ module.exports = function (map) {
 
           map(data, function (err, data) {
             seen[k] = data
-            if(err) ended = err
+            if(err) error = err
             drain()
           })
         }
