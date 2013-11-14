@@ -41,3 +41,34 @@ test('paralell, but output is ordered', function (t) {
   )
 
 })
+
+
+test('paralell, but output is ordered', function (t) {
+  var m = 0
+  function breaky (i, cb) {
+    if(i !== 33)
+      setTimeout(function () {
+        unordered.push(i)
+        cb(null, i)
+      }, Math.random()*100)
+    else
+      setTimeout(function () {
+          cb(new Error('an error'))
+      },100)
+  }
+
+  pull(
+    pull.count(100),
+    pull.through(function (i) {
+      ordered.push(i)
+    }),
+    paraMap(breaky),
+    pull.collect(function (err, ary) {
+      console.log(err, ary)
+      t.ok(err)
+      t.end()
+    })
+  )
+
+})
+
