@@ -12,7 +12,7 @@ module.exports = function (map) {
           _cb = null
           return cb(error)
         }
-        if(typeof seen[j] !== 'undefined') {
+        if(Object.hasOwnProperty.call(seen, j)) {
           _cb = null
           cb(null, seen[j++])
         } else if(j >= last && ended) {
