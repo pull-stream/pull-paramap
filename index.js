@@ -14,7 +14,8 @@ module.exports = function (map, width) {
         }
         if(Object.hasOwnProperty.call(seen, j)) {
           _cb = null
-          cb(null, seen[j++])
+          var data = seen[j]; delete seen[j]; j++
+          cb(null, data)
           if(width) start()
         } else if(j >= last && ended) {
           _cb = null
