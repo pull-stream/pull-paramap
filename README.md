@@ -20,7 +20,8 @@ pull(
   //but return results in the same order as they went in.
   paramap(function (data, cb) {
     asyncJob(data, cb)
-  }),
+  }, width), //optional number.
+             //limits stream to process width items at once
   pull.collect(cb)
 )
 ```
