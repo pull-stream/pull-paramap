@@ -72,3 +72,26 @@ test('paralell, but output is ordered', function (t) {
 
 })
 
+
+test('parallel, but `max` items at once', function (t) {
+  var n = 0, input = []
+  pull(
+    pull.count(100),
+    pull.through(function (i) {
+      input.push(i)
+    }),
+    paraMap(function (data, cb) {
+      n++
+      t.ok(n <= 10, 'max 10 concurrent calls')
+      setTimeout(function () {
+        n--
+        t.ok(n <= 10, 'max 10 concurrent calls')
+        cb(null, data)
+      })
+    }, 10),
+    pull.collect(function (err, output) {
+      t.deepEqual(output, input)
+      t.end()
+    })
+  )
+})
