@@ -1,6 +1,6 @@
 var pull = require('pull-stream')
 
-module.exports = function (map) {
+module.exports = function (map, width) {
   return function (read) {
     var i = 0, j = 0, last = 0
     var seen = [], started = false, ended = false, _cb, error
@@ -15,6 +15,7 @@ module.exports = function (map) {
         if(Object.hasOwnProperty.call(seen, j)) {
           _cb = null
           cb(null, seen[j++])
+          if(width) start()
         } else if(j >= last && ended) {
           _cb = null
           cb(true)
@@ -25,6 +26,7 @@ module.exports = function (map) {
     function start () {
       started = true
       if(ended) return drain()
+      if(width && (i - width >= j)) return
       read(null, function (end, data) {
         if(end) {
           last = i; ended = end
