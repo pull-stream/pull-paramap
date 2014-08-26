@@ -2,7 +2,6 @@ var pull = require('pull-stream')
 var paraMap = require('../')
 var interleavings = require('interleavings')
 var assert = require('assert')
-//test('reads each item in correct order', function (t) {
 
 interleavings.test(function (async) {
   var m = -1
@@ -13,16 +12,10 @@ interleavings.test(function (async) {
       console.log(i)
       assert.ok(i > m, 'ordered:' + i + ' > ' + m)
       m = i
-//      setImmediate(function () {
-        async(cb, 'cb')(null, i)
-  //    })
+      async(cb, 'cb')(null, i)
     }, 2),
-//    async.through('output'),
     pull.drain(null, function () {
       async.done()
     })
   )
 })
-
-//})
-
