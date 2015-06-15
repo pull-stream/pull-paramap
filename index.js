@@ -1,7 +1,7 @@
 var pull = require('pull-stream')
 
 module.exports = function (map, width) {
-  var reading = false
+  var reading = false, abort
   return function (read) {
     var i = 0, j = 0, last = 0
     var seen = [], started = false, ended = false, _cb, error
@@ -30,7 +30,7 @@ module.exports = function (map, width) {
       if(ended) return drain()
       if(reading || width && (i - width >= j)) return
       reading = true
-      read(null, function (end, data) {
+      read(abort, function (end, data) {
         reading = false
         if(end) {
           last = i; ended = end
@@ -51,7 +51,12 @@ module.exports = function (map, width) {
       })
     }
 
-    return function (abort, cb) {
+    return function (_abort, cb) {
+      if(_abort) {
+        return read(ended = abort = _abort, function (err) {
+          if(_cb) return cb(err)
+        })
+      }
       _cb = cb
       if(!started) start()
       drain()
