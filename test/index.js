@@ -3,6 +3,7 @@ var pull = require('pull-stream')
 var paraMap = require('../')
 var ordered = [], unordered = [], unordered2 = []
 var test = require('tape')
+var Abortable = require('pull-abortable')
 
 test('paralell, but output is ordered', function (t) {
 
@@ -94,4 +95,31 @@ test('parallel, but `max` items at once', function (t) {
       t.end()
     })
   )
+})
+
+test('abort a stalled stream', function (t) {
+
+  var abortable = Abortable(), err = new Error('intentional')
+  var i = 2
+  pull(
+    pull.values([1,2,3], function (_err) {
+      t.equal(_err, err)
+      if(0 == --i) t.end()
+    }),
+    paraMap(function (data, cb) {
+      setTimeout(function () {
+        if(data === 1) cb(null, 1)
+        //else stall
+      })
+    }, 10),
+    abortable,
+    pull.drain(null, function (_) {
+      if(0 == --i) t.end()
+    })
+  )
+
+  setTimeout(function () {
+    abortable.abort(err)
+  }, 100)
+
 })

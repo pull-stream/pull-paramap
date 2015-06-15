@@ -12,7 +12,9 @@
   },
   "devDependencies": {
     "tape": "1",
-    "interleavings": "~0.3.0"
+    "interleavings": "~0.3.0",
+    "pull-abortable": "~4.1.0",
+    "pull-stream": "~2.27.0"
   },
   "scripts": {
     "test": "set -e; for t in test/*.js; do node $t; done"
