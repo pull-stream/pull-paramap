@@ -7,9 +7,6 @@
     "type": "git",
     "url": "git://github.com/dominictarr/pull-paramap.git"
   },
-  "dependencies": {
-    "pull-stream": "2.20"
-  },
   "devDependencies": {
     "tape": "1",
     "interleavings": "~0.3.0",
@@ -22,3 +19,4 @@
   "author": "Dominic Tarr <dominic.tarr@gmail.com> (http://dominictarr.com)",
   "license": "MIT"
 }
+

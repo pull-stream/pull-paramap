@@ -1,5 +1,3 @@
-var pull = require('pull-stream')
-
 module.exports = function (map, width) {
   var reading = false, abort
   return function (read) {
@@ -63,3 +61,4 @@ module.exports = function (map, width) {
     }
   }
 }
+
