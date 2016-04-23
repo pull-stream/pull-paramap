@@ -52,7 +52,7 @@ module.exports = function (map, width) {
     return function (_abort, cb) {
       if(_abort) {
         return read(ended = abort = _abort, function (err) {
-          if(_cb) return cb(err)
+          if(cb) return cb(err)
         })
       }
       _cb = cb

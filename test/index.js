@@ -123,3 +123,17 @@ test('abort a stalled stream', function (t) {
   }, 100)
 
 })
+
+test('abort calls back', function (t) {
+  var read = pull(
+    pull.values([1,2,3]),
+    paraMap(function (data, cb) {
+      cb(null, data)
+    })
+  )
+
+  read(true, function (err, data) {
+    t.equal(err, true)
+    t.end()
+  })
+})
