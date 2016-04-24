@@ -50,14 +50,15 @@ module.exports = function (map, width) {
     }
 
     return function (_abort, cb) {
-      if(_abort) {
-        return read(ended = abort = _abort, function (err) {
+      if(_abort)
+        read(ended = abort = _abort, function (err) {
           if(cb) return cb(err)
         })
+      else {
+        _cb = cb
+        if(!started) start()
+        drain()
       }
-      _cb = cb
-      if(!started) start()
-      drain()
     }
   }
 }
