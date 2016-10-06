@@ -1,4 +1,5 @@
-module.exports = function (map, width) {
+module.exports = function (map, width, inOrder) {
+  inOrder = inOrder === undefined ? true : inOrder
   var reading = false, abort
   return function (read) {
     var i = 0, j = 0, last = 0
@@ -37,7 +38,8 @@ module.exports = function (map, width) {
           var k = i++
 
           map(data, function (err, data) {
-            seen[k] = data
+            if (inOrder) seen[k] = data
+            else seen.push(data)
             if(err) error = err
             drain()
           })
