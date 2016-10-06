@@ -24,6 +24,16 @@ pull(
              //limits stream to process width items at once
   pull.collect(cb)
 )
+
+pull(
+  pull.values([....]),
+  //perform an async job in parallel,
+  //and return results in the order they arrive
+  paramap(function (data, cb) {
+    asyncJob(data, cb)
+  }, null, false), // optional flag `inOrder`, default true
+  pull.collect(cb)
+)
 ```
 
 ## License

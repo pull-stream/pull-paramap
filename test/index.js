@@ -1,9 +1,27 @@
-
 var pull = require('pull-stream')
 var paraMap = require('../')
 var ordered = [], unordered = [], unordered2 = []
 var test = require('tape')
 var Abortable = require('pull-abortable')
+
+test('parallel, output unordered', function (t) {
+  t.plan(1)
+  var result = []
+  pull(pull.count(100),
+
+    paraMap(function (i, cb) {
+      setTimeout(function () {
+        result.push(i)
+        cb(null, i)
+      }, (100 - i) * 10)
+    }, null, false),
+
+  pull.collect(function (err, data) {
+    console.log(err, data)
+    console.log(result)
+    t.deepEqual(data, result, 'should emit events in the order they arrive')
+  }))
+})
 
 test('paralell, but output is ordered', function (t) {
 
