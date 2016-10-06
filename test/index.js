@@ -137,3 +137,19 @@ test('abort calls back', function (t) {
     t.end()
   })
 })
+
+test('abort calls back', function (t) {
+  var read = pull(
+    pull.values([1,2,3]),
+    paraMap(function (data, cb) {
+      cb(null, data)
+    }),
+    pull.drain(function (e) {
+      if(e == 2) return false
+    }, function (err, data) {
+    t.equal(err, true)
+    t.end()
+  }))
+})
+
+
