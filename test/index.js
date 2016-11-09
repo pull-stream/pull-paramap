@@ -170,4 +170,19 @@ test('abort calls back', function (t) {
   }))
 })
 
-
+test('abort passes along errors', function (t) {
+  var read = pull(
+    function read(abort, cb) {
+      cb(new Error('Failure'))
+    },
+    paraMap(function (data, cb) {
+      cb(null, data)
+    }),
+    function sink (read) {
+      read(null, function next (err, data) {
+        t.equal(err.message, 'Failure')
+        t.end()
+      })
+    }
+  )
+})

@@ -19,7 +19,7 @@ module.exports = function (map, width, inOrder) {
           if(width) start()
         } else if(j >= last && ended) {
           _cb = null
-          cb(true)
+          cb(ended)
         }
       }
     }
