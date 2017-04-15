@@ -1,3 +1,4 @@
+var looper = require('looper')
 module.exports = function (map, width, inOrder) {
   inOrder = inOrder === undefined ? true : inOrder
   var reading = false, abort
@@ -24,7 +25,7 @@ module.exports = function (map, width, inOrder) {
       }
     }
 
-    function start () {
+    var start = looper(function () {
       started = true
       if(ended) return drain()
       if(reading || width && (i - width >= j)) return
@@ -49,7 +50,7 @@ module.exports = function (map, width, inOrder) {
 
         }
       })
-    }
+    })
 
     return function (_abort, cb) {
       if(_abort)
