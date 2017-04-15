@@ -186,3 +186,16 @@ test('abort passes along errors', function (t) {
     }
   )
 })
+
+test('range error', function (t) {
+  pull(
+    pull.count(10000),
+    paraMap(function (d, cb) {
+      cb(null, d*10000)
+    }),
+    pull.drain(null, function (err) {
+      t.end()
+    })
+  )
+
+})
