@@ -20,5 +20,12 @@
   "license": "MIT",
   "dependencies": {
     "looper": "^4.0.0"
+  },
+  "bugs": {
+    "url": "https://github.com/dominictarr/pull-paramap/issues"
+  },
+  "main": "index.js",
+  "directories": {
+    "test": "test"
   }
 }
